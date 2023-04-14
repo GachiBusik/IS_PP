@@ -1,0 +1,47 @@
+  //public partial class Authoriztion : Form
+  Timer timer = new Timer();
+  
+ //public Authoriztion()
+      
+            timer.Tick += new EventHandler(Timer_Tick);
+
+       
+        
+        //  private void button1_Click(object sender, EventArgs e)
+        
+         if ((textBox3.Enabled == true) && (textBox3.Text != label3.Text))
+            {
+                MessageBox.Show("Неправильная капча");
+                qq();
+
+                s = 5;
+                timer.Interval = 1000;
+                timer.Start();
+                label5.Text = "Отсчет: " + s.ToString();
+            }
+            
+            
+               private void Timer_Tick(object sender, EventArgs e)
+        {
+
+            s--;
+
+            if (s == 0)
+            {
+                timer.Stop();
+                label5.Text = "";
+                return;
+            }
+
+            label5.Text = "Осталось ждать " + s.ToString();
+            if (s == 0)
+            {
+                textBox2.Show();
+            }
+            else
+            {
+                textBox2.Hide();
+
+            }
+
+        }
