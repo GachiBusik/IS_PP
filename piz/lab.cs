@@ -14,6 +14,8 @@ using iTextSharp;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using IronBarCode;
+using Aspose.Pdf.Operators;
+using Image = iTextSharp.text.Image;
 
 namespace piz
 {
@@ -138,12 +140,13 @@ namespace piz
 
                 try
                 {
-                    PdfWriter.GetInstance(document, new FileStream(saveFileDialog.FileName, FileMode.Create));
-
+                    PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(saveFileDialog.FileName, FileMode.Create));
                     document.Open();
 
+                    // Создание таблицы
                     PdfPTable pdfTable = new PdfPTable(dataGridView.ColumnCount);
 
+                    // Заполнение таблицы данными из DataGridView
                     foreach (DataGridViewColumn column in dataGridView.Columns)
                     {
                         PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText));
@@ -158,7 +161,15 @@ namespace piz
                         }
                     }
 
+                    // Добавление таблицы на страницу документа
                     document.Add(pdfTable);
+
+                    // Загрузка изображения
+                    Image barcode = Image.GetInstance("barcode.png");
+
+                    // Размещение изображения на странице документа
+                    barcode.SetAbsolutePosition(PageSize.A4.Width - 100, PageSize.A4.Height - 100);
+                    document.Add(barcode);
 
                     document.Close();
 
@@ -170,10 +181,15 @@ namespace piz
                 }
             }
         }
+        private void ExportPNGToPDF()
+        {
+
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
             ExportToPdf(dataGridView1);
+            
         }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
