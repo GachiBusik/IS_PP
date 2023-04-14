@@ -108,22 +108,26 @@ namespace piz
                 label11.Visible = true;
                 label11.Text = "Неверный код";
             }
+            else 
+            {
+                label11.Visible = false;
 
-            label11.Visible = false;
+                Search();
+                IronBarCode.License.LicenseKey = "IRONBARCODE.DANILATYULKIN.31314-2EB1868BB7-HNXEDO-XY3OIEHH2HKQ-ZWH4OJPEI3DT-IRDOVO4JGNBN-PYDX6ZL4O4ZJ-QGTGJY2PJLZU-R7Q6AV-TGG77DI2HF6JUA-DEPLOYMENT.TRIAL-BOXF47.TRIAL.EXPIRES.12.MAY.2023";
 
-            Search();
-            IronBarCode.License.LicenseKey = "IRONBARCODE.DANILATYULKIN.31314-2EB1868BB7-HNXEDO-XY3OIEHH2HKQ-ZWH4OJPEI3DT-IRDOVO4JGNBN-PYDX6ZL4O4ZJ-QGTGJY2PJLZU-R7Q6AV-TGG77DI2HF6JUA-DEPLOYMENT.TRIAL-BOXF47.TRIAL.EXPIRES.12.MAY.2023";
+                GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(str, BarcodeWriterEncoding.Code128);
 
-            GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(str, BarcodeWriterEncoding.Code128);
+                myBarcode.AddAnnotationTextAboveBarcode("Номер пробирки:");
+                myBarcode.AddBarcodeValueTextBelowBarcode();
 
-            myBarcode.AddAnnotationTextAboveBarcode("Номер пробирки:");
-            myBarcode.AddBarcodeValueTextBelowBarcode(str);
+                myBarcode.SaveAsPng("barcode.png");
+                myBarcode.SaveAsPdf("barcode.pdf");
 
-            myBarcode.SaveAsPng("barcode.png");
-            myBarcode.SaveAsPdf("barcode.pdf");
+                System.Drawing.Image image = System.Drawing.Image.FromFile("barcode.png");
+                pictureBox1.Image = image;
+            }
 
-            System.Drawing.Image image = System.Drawing.Image.FromFile("barcode.png");
-            pictureBox1.Image = image;
+            
         }
 
         private void ExportToPdf(DataGridView dataGridView)
