@@ -117,8 +117,8 @@ namespace piz
 
                 GeneratedBarcode myBarcode = IronBarCode.BarcodeWriter.CreateBarcode(str, BarcodeWriterEncoding.Code128);
 
-                myBarcode.AddAnnotationTextAboveBarcode("Номер пробирки:");
-                myBarcode.AddBarcodeValueTextBelowBarcode();
+                myBarcode.AddAnnotationTextBelowBarcode(str);
+                
 
                 myBarcode.SaveAsPng("barcode.png");
                 myBarcode.SaveAsPdf("barcode.pdf");
